@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>site reporter</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: black;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        #binaryRain {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .container {
+            position: relative;
+            text-align: center;
+            z-index: 1;
+        }
+        h1 {
+            color: rgb(174, 255, 0);
+            font-size: 50px;
+        }
+        h2 {
+            color: rgb(239, 0, 0);
+            font-size: 50px;
+
+        }
+        .input-area {
+            margin: 100px;
+            size: ;font-size: 130;
+
+        }
+        .processing {
+            font-size: 40px;
+            color: rgb(0, 232, 190);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="binaryRain"></canvas>
+    <div class="container">
+        <h1>Bax Bazmande</h1>
+        <h2>site reporter</h2>
+        <div class="input-area">
+            <select id="optionSelect">
+                <option value="option1">report rubika</option>
+                <option value="option2">report shad</option>
+                <option value="option3">report splus</option>
+            </select>
+            <input type="text" id="textInput" placeholder="URL TarGer : ">
+            <button id="submitButton">send report</button>
+        </div>
+        <div id="processingMessage" class="processing">در حال پردازش</div>
+    </div>
+    <script>
+        const canvas = document.getElementById('binaryRain');
+        const ctx = canvas.getContext('2d');
+        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
+
+        const binaryChars = ['0', '1'];
+        const fontSize = 10;
+        const columns = canvas.width / fontSize;
+        const drops = Array.from({ length: columns }).fill(1);
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+            drops.forEach((drop, index) => {
+                const text = binaryChars[Math.floor(Math.random() * binaryChars.length)];
+                ctx.fillText(text, index * fontSize, drop * fontSize);
+                if (drop * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[index] = 0;
+                }
+                drops[index]++;
+            });
+        }
+
+        setInterval(draw, 33);
+
+        document.getElementById('submitButton').addEventListener('click', function() {
+            document.getElementById('processingMessage').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
